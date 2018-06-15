@@ -5,4 +5,13 @@ Camille :
 J'ai commencé par m'occuper de spliter l'écran en deux, trois ou quatre en fonction du nombre de joueurs (en perdant un peu de temps initialement en essayant de passer par du réseau pour cela). 
 Je me suis aussi occupée d'adapter notre jeu pour une manette de Xbox et de faire en sorte que chaque manette corresponde à un joueur. 
 J'ai créé le menu qui permet de choisir le nombre de joueurs, et je l'ai rendu fonctionnel à la fois pour une manette de Xbox et pour une souris d'ordinateur. Pour l'instant, ce menu n'est pas très beau, mais il a le mérite d'être fonctionnel...
-Enfin, dans le niveau tutoriel, les joueurs ne doivent pas se voir les uns les autres. Je m'en suis occupée aussi. 
+Enfin, dans le niveau tutoriel, les joueurs ne doivent pas se voir les uns les autres. Je m'en suis occupée aussi.
+
+
+Théo :
+
+J'ai premièrement implémenté la parallaxe dans le jeu. 
+J'ai aussi co-designé le premier niveau avec Thomas, niveau implémenté dans le jeu.
+
+J'ai aussi implémenté une gestion première de l'éclairage, et la création de la "luciole" éclairant par ailleurs le joueur.
+Enfin, j'ai créé le système de particules pour gérer la fumée en arrière plan.
