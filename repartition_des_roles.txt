@@ -12,3 +12,9 @@ Enfin, dans le niveau tutoriel, les joueurs ne doivent pas se voir les uns les a
 Fanny : 
 Je me suis occupée dans un premier temps du design du tuto à partir de la base du projet unity JumpLecture fait en cours. Avec l'aide de Thomas (qui a designé le levier et fait une fonction d'activation), je me suis occupée de lier le levier à l'action de monter un mur. 
 Je me suis ensuite occupée du design du 1er niveau. 
+
+Thomas :
+Je me suis occupé dans un premier temps de faire des visuels de plateformes/fonds/levierscaisses en attendant d'avoir ceux des artistes,
+puis j'ai fait une fonction d'activation pour les levier, avant de m'occuper de designer le niveau 1.
+Ensuite, j'ai ajouté aux personnages la possibilités d'effectuer un wall jump.
+Enfin, j'ai mis en place les deux attaques pour le primtemps et l'automne: pour l'automne, un appui cours crée un éclair, et un appui long lance un nuage, en lachant le bouton, le nuage s'immobilise de lance un éclaire. pour le primtemps: un appui court fait apparaître un buisson qui fait office de plateforme, et un appui long fait que ce buisson attaque avec une liane. l'attaque de la liane n'est pas encore finie.
