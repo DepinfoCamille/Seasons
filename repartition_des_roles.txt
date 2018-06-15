@@ -6,3 +6,9 @@ J'ai commencé par m'occuper de spliter l'écran en deux, trois ou quatre en fon
 Je me suis aussi occupée d'adapter notre jeu pour une manette de Xbox et de faire en sorte que chaque manette corresponde à un joueur. 
 J'ai créé le menu qui permet de choisir le nombre de joueurs, et je l'ai rendu fonctionnel à la fois pour une manette de Xbox et pour une souris d'ordinateur. Pour l'instant, ce menu n'est pas très beau, mais il a le mérite d'être fonctionnel...
 Enfin, dans le niveau tutoriel, les joueurs ne doivent pas se voir les uns les autres. Je m'en suis occupée aussi. 
+
+
+
+Fanny : 
+Je me suis occupée dans un premier temps du design du tuto à partir de la base du projet unity JumpLecture fait en cours. Avec l'aide de Thomas (qui a designé le levier et fait une fonction d'activation), je me suis occupée de lier le levier à l'action de monter un mur. 
+Je me suis ensuite occupée du design du 1er niveau. 
