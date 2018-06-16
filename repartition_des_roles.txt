@@ -35,4 +35,8 @@ Mathias :
 Je me suis principalement concentré sur la création des ennemis. J'ai écrit un code qui permet de donner aux ennemis de nombreux comportements. Ainsi, on peut choisir l'orientation de l'ennemi, s'il marche, sa vitesse, s'il saute, à quelle fréquence il saute, s'il attaque, à quelle fréquence il attaque. En changeant sa physique, on peut le faire glisser au mur, rebondir ou bien même voler. L'ennemi est bien sûr animé suivant l'action qu'il fait.
 J'ai aussi gérer l'interaction entre le joueur et les ennemis. Pour le moment, les ennemis tuent le joueur par contact ou par envoie de projectile. Le joueur peut sauter sur l'ennemi ou lui envoyer des projectiles pour tuer les ennemis.
 Pour l'heure, le manque d'assets graphique m'a empêché de créer beaucoup d'ennemis variés, mais dès l'arrivée des sprites, l'implémentation des nouveaux ennemis ne sera pas très longue (il faudra juste choisir les bons paramètres). 
-Un code similaire est en cours de création pour les boss. 
+Un code similaire est en cours de création pour les boss.
+
+Guillaume : 
+
+J'ai implémenté les personnages de l'été et de l'hiver, ainsi que leurs attaques respectives. Ces deux personnes sont assez similaires et ont tous les deux une petite attaque et une grosse attaque qui sont des Projectiles. Je me suis donc inspiré de l'attaque bomb deja implémentée dans le jeu de base
