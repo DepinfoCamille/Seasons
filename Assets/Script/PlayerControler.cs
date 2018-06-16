@@ -38,6 +38,10 @@ public class PlayerControler : MonoBehaviour
 	ContactFilter2D m_ContactFilter;
 	RaycastHit2D[] m_HitBuffer = new RaycastHit2D[5];
 
+	// Firefly - one for now
+	private GameObject firefly;
+	private GameObject fireflyOriginal;
+
     public void SetPlayerNumber(int id)
     {
 
@@ -72,6 +76,13 @@ public class PlayerControler : MonoBehaviour
         Debug.Log(AButton);
         AButton = "J" + numberPlayer + "Jump";
         Debug.Log(BButton);
+
+		// Firefly creation
+		fireflyOriginal = GameObject.Find("Firefly");
+		firefly = Instantiate(fireflyOriginal);
+		firefly.transform.SetParent (GetComponent<Transform> ());
+		//firefly.transform.localPosition.Set (0, 0, -1);
+
     }
 
     // Update is called once per frame
