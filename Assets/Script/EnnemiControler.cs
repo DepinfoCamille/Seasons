@@ -10,7 +10,16 @@ public class EnnemiControler : MonoBehaviour
 	protected bool airControl = true;	// whehter control is allowed during jump phase
 	public LayerMask groundLayers;	// layer used to test for the ground, should be defined through the inspector
 
+	public float m_Scale=1;
+
+	public GameObject explodePrefab;
+
 	public float speed = 1.0f;
+
+	public float health = 3.0f;
+	private bool isInvincible = false ;
+	private float healthStartTime;
+	private float healthCooldown = 2.5f;
 
 	// Current state of the player
 	private bool grounded;	// true if player is considered grounded
@@ -32,6 +41,7 @@ public class EnnemiControler : MonoBehaviour
 	protected readonly int m_HashSpeedPara = Animator.StringToHash ("speed");
 	protected readonly int m_HashVerticalSpeedPara = Animator.StringToHash ("vSpeed");
 	protected readonly int m_HashRunPara = Animator.StringToHash ("run");
+	protected readonly int m_HashDoFirePara = Animator.StringToHash ("doFire");
 
 	private float startTime;
 	public float jumpCooldown = 5f;
@@ -41,6 +51,7 @@ public class EnnemiControler : MonoBehaviour
 	private float startTimeB;
 	public float fireCooldown = 5f;
 	public bool fireActivation = false;
+	private bool fire = false;
 
 	// Contacts (we do not want to re-affects memory at every frame)
 	public float groundedRaycastDistance = 0.1f;
@@ -51,6 +62,9 @@ public class EnnemiControler : MonoBehaviour
 	{
 		//Time initialization
 		startTime = Time.time;
+		startTimeB = Time.time;
+
+		healthStartTime = Time.time;
 
 		// get the component that will be used at each Update
 		m_Animator = GetComponent<Animator> ();
@@ -76,7 +90,25 @@ public class EnnemiControler : MonoBehaviour
 
 		if (other.gameObject.CompareTag ("KillerJump")) {
 
+
+
+
+			var explode = Instantiate(explodePrefab, transform.position, Quaternion.identity);
+			explode.SetActive(true);
+			Destroy(explode, 0.3f); // we want to automatically destroy the explosion game object when the animation is finished
 			Destroy (gameObject);
+		}
+
+
+		if (other.gameObject.CompareTag ("Damager") && !isInvincible) {
+
+			health = health - 1f;
+			isInvincible = true; 
+			GetComponent<SpriteRenderer>().color = new Color(1f,1f - 1/(0.5f+health),1f - 1/(0.5f+ health));
+
+
+
+			m_Rigidbody.velocity = new Vector2 (m_Rigidbody.velocity.x / 1.5f + maxSpeed / 1.5f, m_Rigidbody.velocity.y / 2 );
 		}
 
 		if (other.gameObject.CompareTag ("Player")) {
@@ -119,6 +151,43 @@ public class EnnemiControler : MonoBehaviour
 			}
 		}
 
+		if (fireActivation) {
+			fire = false;
+			// Read the jump input in Update so button presses aren't missed.
+			if (Time.time > startTimeB + fireCooldown) {
+				startTimeB = Time.time;
+				fire = true;
+				m_Animator.SetBool (m_HashDoFirePara, false); 
+			} else if(Time.time - startTimeB > fireCooldown - 1f) {
+				m_Animator.SetBool (m_HashDoFirePara, true); 
+			}
+		
+
+
+		if (isInvincible){
+			if (Time.time > healthStartTime + healthCooldown) {
+				healthStartTime = Time.time;
+				isInvincible = false;
+				GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f);
+			
+				//change size
+				//Vector3 scale = new Vector3( 4f, 4f, 1f );
+				//transform.localScale = scale;
+			}
+		}
+		}
+			
+
+		if (health < 1f) {
+
+
+
+			var explode = Instantiate(explodePrefab, transform.position, Quaternion.identity);
+			explode.SetActive(true);
+			Destroy(explode, 0.3f); // we want to automatically destroy the explosion game object when the animation is finished
+			Destroy (gameObject);
+		}
+
 		CheckAndThrowBomb ();
 	}
 
@@ -142,6 +211,7 @@ public class EnnemiControler : MonoBehaviour
 
 			// update the state of the animation state machine
 			m_Animator.SetBool (m_HashGroundedPara, grounded); 
+
 
 			m_Animator.SetFloat (m_HashSpeedPara, Mathf.Abs (h)); 
 
@@ -190,7 +260,7 @@ public class EnnemiControler : MonoBehaviour
 		Vector2 raycastDirection = Vector2.down;
 		Vector2 raycastStart = m_Rigidbody.position + m_Capsule.offset;
 		raycastStart = raycastStart + Vector2.down * (m_Capsule.size.y * 0.5f - m_Capsule.size.x * 0.5f);
-		float raycastDistance = m_Capsule.size.x * 2.0f + groundedRaycastDistance * 	2.0f;
+		float raycastDistance = m_Capsule.size.x * 2.5f/m_Scale + groundedRaycastDistance * 	2.5f/m_Scale;
 
 		int count = Physics2D.Raycast(raycastStart, raycastDirection, m_ContactFilter, m_HitBuffer, raycastDistance);
 
@@ -233,15 +303,15 @@ public class EnnemiControler : MonoBehaviour
 	// stop it when it is released
 	public void CheckAndThrowBomb ()
 	{
-		if (Input.GetButtonDown ("Fire2")) {
+		if (fire) {
 			if (m_ShootingCoroutine == null) {
 				m_HeldFire = true;
 				m_ShootingCoroutine = StartCoroutine (Shoot ());
+				m_HeldFire = false;
+				StopCoroutine (m_ShootingCoroutine);
+				m_ShootingCoroutine = null;
 			}
-		} else if (Input.GetButtonUp ("Fire2")) {
-			m_HeldFire = false;
-			StopCoroutine (m_ShootingCoroutine);
-			m_ShootingCoroutine = null;
+			
 		}
 	}
 
@@ -258,7 +328,7 @@ public class EnnemiControler : MonoBehaviour
 		GameObject bomb = Instantiate(bombPrefab); // Create a new game object from the prefab
 		bomb.SetActive(true); // ensure the new object is Active to be visible within the scene
 		// Initialize the bomb velocity and position
-		Vector2 posStart = m_Rigidbody.position + m_Capsule.offset + Vector2.left * (facingRight ? -1.5f : 1.5f) * m_Capsule.size.x;
+		Vector2 posStart = m_Rigidbody.position + (m_Capsule.offset + Vector2.left * (facingRight ? -1.5f : 1.5f) * m_Capsule.size.x)*m_Scale;
 		bomb.GetComponent<Rigidbody2D> ().position = posStart;
 		bomb.GetComponent<Rigidbody2D>().velocity = new Vector2(facingRight ? bulletSpeed/2 : -bulletSpeed/2, bulletSpeed/2);
 	}
