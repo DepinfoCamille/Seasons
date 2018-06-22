@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class NextLevel : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.CompareTag ("Player")) {
-            if (SceneManager.GetActiveScene().name == "Plateforms")
+            if (SceneManager.GetActiveScene().name == "Niveau0")
             {
                 SceneManager.LoadScene("Niveau1");
             }
