@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 // and reloading the current scene
 
 public class DeathScript : MonoBehaviour {
-	void OnTriggerEnter2D (Collider2D other)
+    public Vector3 respawnPositions;
+    void OnTriggerEnter2D (Collider2D other)
 	{
 		if (other.gameObject.CompareTag ("Player")) {
             PersistentDataExample.Instance.m_NbLiveUsed += 1;
@@ -15,8 +16,9 @@ public class DeathScript : MonoBehaviour {
             // as the get operation we have defined in PersistentDataExample
             // will create the data if it does not already exist in the scene
 
-			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+            other.transform.position = respawnPositions;
+            //SceneManager.LoadScene (SceneManager.GetActiveScene().name);
             // restart current scene
-		}
+        }
 	}
 }
