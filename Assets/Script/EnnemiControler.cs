@@ -12,7 +12,9 @@ public class EnnemiControler : MonoBehaviour
 
 	public float m_Scale=1;
 
-	public GameObject explodePrefab;
+    public Vector3 respawnPositions;
+
+    public GameObject explodePrefab;
 
 	public float speed = 1.0f;
 
@@ -113,10 +115,10 @@ public class EnnemiControler : MonoBehaviour
 
 		if (other.gameObject.CompareTag ("Player")) {
 
-
-			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
-			// restart current scene
-		}
+            other.transform.position = respawnPositions;
+            //SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+            // restart current scene
+        }
 
 		if (other.gameObject.CompareTag ("MainCamera")) {
 			//SceneManager.LoadScene ("EndlessFall");
