@@ -115,8 +115,8 @@ public class EnnemiControler : MonoBehaviour
 
 		if (other.gameObject.CompareTag ("Player")) {
 
-            other.transform.position = respawnPositions;
-            //SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+            //other.transform.position = respawnPositions;
+            SceneManager.LoadScene (SceneManager.GetActiveScene().name);
             // restart current scene
         }
 
