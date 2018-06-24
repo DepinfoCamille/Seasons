@@ -10,7 +10,7 @@ public class PlayerControler : MonoBehaviour
     public int type; // 1=Automn, 2=Spring, 3= Summer, 4=Winter
     // Current state of the player
     private bool grounded;  // true if player is considered grounded
-    bool facingRight = true;    // facing direction of the player
+    public bool facingRight = true;    // facing direction of the player
     private bool walledL;
     private bool walledR; // true if player is considered as hiting the ground
 
@@ -46,7 +46,7 @@ public class PlayerControler : MonoBehaviour
     }
 
     // Update is called once per frame
-    void SetPlayerNumber(int i)
+    public void SetPlayerNumber(int i)
     {
         type = i;
     }
